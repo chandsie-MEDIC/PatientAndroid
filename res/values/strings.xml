@@ -3,7 +3,8 @@
 
     <string name="hello">Multipurpose Electronic Doctor Interface Capsule</string>
     <string name="app_name">MEDIC</string>
-	<string name="button1">Doctor</string>
-	<string name="button2">Trial</string>
+	<string name="home_doctor_button">Doctor</string>
+	<string name="home_trial_button">Trial</string>
+	<string name="home_about_button">About</string>
 	<string name="space"> </string>
 </resources>
