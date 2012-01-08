@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">MEDIC: Multipurpose Electronic Doctor Interface Capsule</string>
+    <string name="hello">Multipurpose Electronic Doctor Interface Capsule</string>
     <string name="app_name">MEDIC</string>
-
+	<string name="button1">Doctor</string>
+	<string name="button2">Trial</string>
+	<string name="space"> </string>
 </resources>
