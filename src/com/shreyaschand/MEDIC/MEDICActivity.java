@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 public class MEDICActivity extends Activity implements OnClickListener {
-    /** Called when the activity is first created. */
-    @Override
+ 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -17,8 +16,7 @@ public class MEDICActivity extends Activity implements OnClickListener {
         aboutButton.setOnClickListener(this);
     }
     
-    @Override
-	public void onClick(View v) {
+ 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.home_about_button:
 			Intent i = new Intent(this, About.class);
