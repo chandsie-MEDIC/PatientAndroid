@@ -21,7 +21,7 @@
       
         <activity
             android:name=".About"
-            android:label="@string/home_about_button" />
+            android:label="@string/home_about" />
       
     </application>
 
