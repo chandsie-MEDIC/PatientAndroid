@@ -23,11 +23,11 @@
 		android:gravity="center"  />
 
     <Button
-        android:id="@+id/home_doctor"
+        android:id="@+id/home_doctor_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/home_doctor_button"
+        android:text="@string/home_doctor"
         android:textSize="35sp" />
 
     <TextView
@@ -38,11 +38,11 @@
         android:text="@string/space" />
 
     <Button
-        android:id="@+id/home_trial"
+        android:id="@+id/home_trial_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/home_trial_button"
+        android:text="@string/home_trial"
 		android:textSize="35sp"  />
 
     <TextView
@@ -53,11 +53,11 @@
         android:text="@string/space" />
        
 	<Button
-        android:id="@+id/home_about"
+        android:id="@+id/home_about_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
-        android:text="@string/home_about_button"
+        android:text="@string/home_about"
 		android:textSize="35sp"  />
     
 </LinearLayout>

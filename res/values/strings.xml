@@ -5,13 +5,13 @@
     <string name="app_name">MEDIC</string>
 	<string name="space"> </string>
     
-    <string name="home_doctor_button">Doctor</string>
-	<string name="home_trial_button">Trial</string>
-	<string name="home_about_button">About</string>
+    <string name="home_doctor">Doctor</string>
+	<string name="home_trial">Trial</string>
+	<string name="home_about">About</string>
 	
 	<string name="about_info">App designed by Shreyas Chand and Bri Mussman. 2012.</string>
 	<string name="about_ack">Many thanks to Mr. Paterno.</string>
 	<string name="about_version">Version 1.0</string>
-	<string name="about_back_button">Back</string>
+	<string name="about_back">Back</string>
 	
 </resources>

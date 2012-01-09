@@ -61,11 +61,11 @@
         android:text="@string/space" />
        
 	<Button
-        android:id="@+id/home_about"
+        android:id="@+id/about_back_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
-        android:text="@string/about_back_button"
+        android:text="@string/about_back"
 		android:textSize="35sp"  />
     
 </LinearLayout>
