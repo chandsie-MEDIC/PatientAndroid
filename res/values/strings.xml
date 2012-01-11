@@ -12,6 +12,7 @@
 	<string name="about_info">App designed by Shreyas Chand and Bri Mussman. 2012.</string>
 	<string name="about_ack">Many thanks to Mr. Paterno.</string>
 	<string name="about_version">Version 1.0</string>
-	<string name="about_back">Back</string>
+	
+	<string name="back">Back</string>
 	
 </resources>

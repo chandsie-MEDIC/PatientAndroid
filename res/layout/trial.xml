@@ -37,11 +37,11 @@
         android:text="@string/space" />
        
 	<Button
-        android:id="@+id/home_about_button"
+        android:id="@+id/trial_back_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".2"
-        android:text="@string/about_back"
+        android:text="@string/back"
 		android:textSize="35sp"  />
     
 </LinearLayout>
