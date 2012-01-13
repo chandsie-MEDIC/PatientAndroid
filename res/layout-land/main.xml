@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:stretchColumns="1"
     android:orientation="vertical" >
-
-    <TextView
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,38 +17,42 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight=".1"
+        android:layout_weight=".05"
         android:text="@string/hello" 
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:gravity="center"  />
 
-    <TextView
-        android:id="@+id/space1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight=".05"
-        android:text="@string/space" />
+   <TableRow>
+    <Button
+        android:layout_column="1"
+        android:id="@+id/home_doctor_button"
+        android:text="@string/home_doctor" 
+        android:textSize="35sp" 
+    	android:layout_weight="1" 
+    	android:layout_width="0dp" />
+	
+    <Button
+        android:id="@+id/home_trial_button"
+        android:text="@string/home_trial"
+		android:textSize="35sp"
+		android:layout_weight="1" 
+     	android:layout_width="0dp" />
 
-    <TextView
+    </TableRow>
+    
+ <TextView
         android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight=".15"
-        android:text="@string/space" />
-       
-    <TextView
-        android:id="@+id/space2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".05"
+        android:layout_weight=".005"
         android:text="@string/space" />
     
-	<Button
-        android:id="@+id/trial_back_button"
+<Button
+        android:id="@+id/home_about_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".1"
-        android:text="@string/back"
+        android:layout_weight=".04"
+        android:text="@string/home_about"
 		android:textSize="35sp"  />
     
-</LinearLayout>
+</TableLayout>
