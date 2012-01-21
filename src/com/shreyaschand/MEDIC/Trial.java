@@ -37,6 +37,26 @@ public class Trial extends Activity implements OnClickListener {
 			Intent enableIntent = new Intent(
 					BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+		} else {
+			setupBt();
+		}
+
+	}
+
+	private void setupBt() {
+
+	}
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case REQUEST_ENABLE_BT:
+			if (resultCode == Activity.RESULT_OK) {
+				setupBt();
+			} else {
+				Toast.makeText(this, "Bluetooth not enabled.",
+						Toast.LENGTH_LONG).show();
+				finish();
+			}
 		}
 	}
 
