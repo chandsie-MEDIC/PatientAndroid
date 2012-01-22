@@ -28,8 +28,12 @@
         
         <activity 
             android:name=".Trial"
-            android:label="@string/home_trial" />/
+            android:label="@string/home_trial" />
       
+        <activity android:name=".DeviceListActivity"
+                  android:label="@string/select_device"
+                  android:theme="@android:style/Theme.Dialog"
+                  android:configChanges="orientation|keyboardHidden" />
     </application>
 
 </manifest>

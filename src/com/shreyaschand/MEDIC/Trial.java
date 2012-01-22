@@ -2,18 +2,27 @@ package com.shreyaschand.MEDIC;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class Trial extends Activity implements OnClickListener {
 
-	BluetoothAdapter btAdapter;
+	private final String TAG = "Trial";
+	
+	private BluetoothAdapter btAdapter;
 
+	private BluetoothDevice device = null;
+	
+	private static final int DEVICE_CONNECT = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
-
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trial);
@@ -23,6 +32,10 @@ public class Trial extends Activity implements OnClickListener {
 
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 
+		Button connect_button = (Button) findViewById(R.id.trial_connect_button);
+		connect_button.setEnabled(false);
+		connect_button.setOnClickListener(this);
+		
 		if (btAdapter == null) {
 			Toast.makeText(this, "Bluetooth is not available",
 					Toast.LENGTH_LONG).show();
@@ -44,7 +57,7 @@ public class Trial extends Activity implements OnClickListener {
 	}
 
 	private void setupBt() {
-
+		findViewById(R.id.trial_connect_button).setEnabled(true);
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -57,10 +70,23 @@ public class Trial extends Activity implements OnClickListener {
 						Toast.LENGTH_LONG).show();
 				finish();
 			}
+			break;
+		case DEVICE_CONNECT:
+			device = btAdapter.getRemoteDevice(data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS));
+			Toast.makeText(this, device.getName(),
+					Toast.LENGTH_LONG).show();
+			break;
 		}
 	}
 
 	public void onClick(View v) {
-		finish();
+		Log.d(TAG, "clicked");
+		switch(v.getId()){
+		case R.id.trial_back_button:
+			finish();
+			break;
+		case R.id.trial_connect_button:
+			startActivityForResult(new Intent(this, DeviceListActivity.class), DEVICE_CONNECT);
+		}
 	}
 }
