@@ -2,11 +2,8 @@ package com.shreyaschand.MEDIC;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.lang.reflect.Method;
-import java.util.Scanner;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -18,6 +15,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +25,9 @@ public class Trial extends Activity implements OnClickListener {
 	private BluetoothAdapter btAdapter;
 	public BluetoothSocket socket;
 
+	private TextView output = null;
+	private ScrollView scroller = null;
+	
 	private static final int DEVICE_SELECT = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	
@@ -36,6 +37,9 @@ public class Trial extends Activity implements OnClickListener {
 
 		View backButtonView = findViewById(R.id.trial_back_button);
 		backButtonView.setOnClickListener(this);
+		
+		output = ((TextView)findViewById(R.id.test_output));
+		scroller = (ScrollView)findViewById(R.id.trial_scroller);
 
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -95,11 +99,11 @@ public class Trial extends Activity implements OnClickListener {
 		}
 		protected void onPostExecute(Boolean result) {
 			if(result) {
-				((TextView)findViewById(R.id.test_output)).setText("connected.");
+				output.setText("connected.");
 				findViewById(R.id.trial_connect_button).setEnabled(false);
 				new BTCommunicator().execute(socket);
 			}else{
-				((TextView)findViewById(R.id.test_output)).setText("error connecting.");
+				output.setText("error connecting.");
 			}
 		}
 		
@@ -120,7 +124,8 @@ public class Trial extends Activity implements OnClickListener {
 			return null;
 		}
 		protected void onProgressUpdate(String... update){
-			((TextView)findViewById(R.id.test_output)).append("\n" + update[0]);		
+			output.append("\n" + update[0]);
+			scroller.fullScroll(ScrollView.FOCUS_DOWN);
 		}
 	}
 
