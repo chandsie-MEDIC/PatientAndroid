@@ -23,7 +23,9 @@
         android:id="@+id/trial_scroller"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight=".6">
+        android:layout_weight=".6"
+        android:fadeScrollbars="false"
+        android:fadingEdge="none">
 
         <TextView
             android:id="@+id/test_output"
