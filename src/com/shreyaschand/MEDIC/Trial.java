@@ -1,6 +1,12 @@
 package com.shreyaschand.MEDIC;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.util.Scanner;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -19,7 +25,6 @@ import android.widget.Toast;
 public class Trial extends Activity implements OnClickListener {
 	
 	private BluetoothAdapter btAdapter;
-
 	public BluetoothSocket socket;
 
 	private static final int DEVICE_SELECT = 1;
@@ -92,11 +97,31 @@ public class Trial extends Activity implements OnClickListener {
 			if(result) {
 				((TextView)findViewById(R.id.test_output)).setText("connected.");
 				findViewById(R.id.trial_connect_button).setEnabled(false);
+				new BTCommunicator().execute(socket);
 			}else{
 				((TextView)findViewById(R.id.test_output)).setText("error connecting.");
 			}
 		}
 		
+	}
+	
+	private class BTCommunicator extends AsyncTask<BluetoothSocket, String, Void> {
+		protected Void doInBackground(BluetoothSocket... socket) {
+			try {
+				BufferedReader in = new BufferedReader(new InputStreamReader(socket[0].getInputStream()));
+				String message = in.readLine();
+				while(message != null){
+					publishProgress(new String[] {message});
+					message = in.readLine();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		protected void onProgressUpdate(String... update){
+			((TextView)findViewById(R.id.test_output)).append("\n" + update[0]);		
+		}
 	}
 
 	public void onClick(View v) {
