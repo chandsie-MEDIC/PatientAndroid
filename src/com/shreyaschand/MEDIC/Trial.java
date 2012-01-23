@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -88,6 +87,7 @@ public class Trial extends Activity implements OnClickListener {
 
 		protected Boolean doInBackground(String... mac) {
 			try {
+				publishProgress();
 				BluetoothDevice device = btAdapter.getRemoteDevice(mac[0]);
 				Method m = device.getClass().getMethod("createRfcommSocket", new Class[] { int.class });
 				socket = (BluetoothSocket) m.invoke(device, 1);
@@ -96,6 +96,11 @@ public class Trial extends Activity implements OnClickListener {
 			} catch (Exception e) {
 				return false;
 			}
+		}
+
+		protected void onProgressUpdate(Void... updates){
+			output.append("Connecting...");
+			scroller.fullScroll(ScrollView.FOCUS_DOWN);
 		}
 		protected void onPostExecute(Boolean result) {
 			if(result) {
