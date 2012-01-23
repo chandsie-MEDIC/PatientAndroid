@@ -78,8 +78,10 @@ public class Trial extends Activity implements OnClickListener {
 			}
 			break;
 		case DEVICE_SELECT:
-			new connectBT().execute(new String[] { data.getExtras().getString(
-					DeviceListActivity.EXTRA_DEVICE_ADDRESS) });
+			if (resultCode == Activity.RESULT_OK) {
+				new connectBT().execute(new String[] { data.getExtras()
+						.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS) });
+			}
 			break;
 		}
 	}
