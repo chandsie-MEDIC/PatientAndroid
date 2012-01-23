@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,34 +19,33 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class Trial extends Activity implements OnClickListener {
-	
+
 	private BluetoothAdapter btAdapter;
 	public BluetoothSocket socket;
 
 	private TextView output = null;
 	private ScrollView scroller = null;
-	
+
 	private static final int DEVICE_SELECT = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
-	
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trial);
 
 		View backButtonView = findViewById(R.id.trial_back_button);
 		backButtonView.setOnClickListener(this);
-		
-		output = ((TextView)findViewById(R.id.test_output));
-		scroller = (ScrollView)findViewById(R.id.trial_scroller);
+
+		output = ((TextView) findViewById(R.id.test_output));
+		scroller = (ScrollView) findViewById(R.id.trial_scroller);
 
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 
 		Button connect_button = (Button) findViewById(R.id.trial_connect_button);
 		connect_button.setEnabled(false);
 		connect_button.setOnClickListener(this);
-		
+
 		if (btAdapter == null) {
 			Toast.makeText(this, "Bluetooth is not available",
 					Toast.LENGTH_LONG).show();
@@ -78,49 +78,54 @@ public class Trial extends Activity implements OnClickListener {
 			}
 			break;
 		case DEVICE_SELECT:
-			new connectBT().execute(new String[] {data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS)});
+			new connectBT().execute(new String[] { data.getExtras().getString(
+					DeviceListActivity.EXTRA_DEVICE_ADDRESS) });
 			break;
 		}
 	}
-	
+
 	private class connectBT extends AsyncTask<String, Void, Boolean> {
 
 		protected Boolean doInBackground(String... mac) {
 			try {
 				publishProgress();
 				BluetoothDevice device = btAdapter.getRemoteDevice(mac[0]);
-				Method m = device.getClass().getMethod("createRfcommSocket", new Class[] { int.class });
+				Method m = device.getClass().getMethod("createRfcommSocket",
+						new Class[] { int.class });
 				socket = (BluetoothSocket) m.invoke(device, 1);
 				socket.connect();
-			return true;
+				return true;
 			} catch (Exception e) {
 				return false;
 			}
 		}
 
-		protected void onProgressUpdate(Void... updates){
+		protected void onProgressUpdate(Void... updates) {
 			output.append("Connecting...");
 			scroller.fullScroll(ScrollView.FOCUS_DOWN);
 		}
+
 		protected void onPostExecute(Boolean result) {
-			if(result) {
+			if (result) {
 				output.setText("connected.");
 				findViewById(R.id.trial_connect_button).setEnabled(false);
 				new BTCommunicator().execute(socket);
-			}else{
+			} else {
 				output.setText("error connecting.");
 			}
 		}
-		
+
 	}
-	
-	private class BTCommunicator extends AsyncTask<BluetoothSocket, String, Void> {
+
+	private class BTCommunicator extends
+			AsyncTask<BluetoothSocket, String, Void> {
 		protected Void doInBackground(BluetoothSocket... socket) {
 			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(socket[0].getInputStream()));
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						socket[0].getInputStream()));
 				String message = in.readLine();
-				while(message != null){
-					publishProgress(new String[] {message});
+				while (message != null) {
+					publishProgress(new String[] { message });
 					message = in.readLine();
 				}
 			} catch (IOException e) {
@@ -128,19 +133,21 @@ public class Trial extends Activity implements OnClickListener {
 			}
 			return null;
 		}
-		protected void onProgressUpdate(String... update){
+
+		protected void onProgressUpdate(String... update) {
 			output.append("\n" + update[0]);
 			scroller.fullScroll(ScrollView.FOCUS_DOWN);
 		}
 	}
 
 	public void onClick(View v) {
-		switch(v.getId()){
+		switch (v.getId()) {
 		case R.id.trial_back_button:
 			finish();
 			break;
 		case R.id.trial_connect_button:
-			startActivityForResult(new Intent(this, DeviceListActivity.class), DEVICE_SELECT);
+			startActivityForResult(new Intent(this, DeviceListActivity.class),
+					DEVICE_SELECT);
 		}
 	}
 }
