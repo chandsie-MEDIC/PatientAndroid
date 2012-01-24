@@ -7,18 +7,18 @@ import android.view.View.OnClickListener;
 
 public class About extends Activity implements OnClickListener {
 
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.about);		
-		
+		setContentView(R.layout.about);
+
 		View backButtonView = findViewById(R.id.about_back_button);
 		backButtonView.setOnClickListener(this);
-		
+
 	}
 
 	public void onClick(View v) {
 
 		finish();
-		
+
 	}
 }
