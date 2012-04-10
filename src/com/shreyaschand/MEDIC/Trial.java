@@ -66,6 +66,26 @@ public class Trial extends Activity implements OnClickListener {
 
 	}
 
+	public void onPause() {
+		try {
+			socket.close();
+			output.append("Connection terminated.");
+		} catch (IOException e) {
+			output.append("Error closing socket.\nAssuming already closed.");
+		}
+		socket = null;
+	}
+
+	public void onDestroy() {
+		try {
+			socket.close();
+			output.append("Connection terminated.");
+		} catch (IOException e) {
+			output.append("Error closing socket.\nAssuming already closed.");
+		}
+		socket = null;
+	}
+
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case REQUEST_ENABLE_BT:
