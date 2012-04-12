@@ -1,4 +1,4 @@
-package com.shreyaschand.MEDIC;
+package com.shreyaschand.MEDIC.Patient;
 
 import java.io.BufferedReader;
 import java.io.IOException;

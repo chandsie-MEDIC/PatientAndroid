@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.shreyaschand.MEDIC;
+package com.shreyaschand.MEDIC.Patient;
 
 import java.util.Set;
 

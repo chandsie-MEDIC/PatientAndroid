@@ -1,4 +1,4 @@
-package com.shreyaschand.MEDIC;
+package com.shreyaschand.MEDIC.Patient;
 
 import android.app.Activity;
 import android.content.Intent;
