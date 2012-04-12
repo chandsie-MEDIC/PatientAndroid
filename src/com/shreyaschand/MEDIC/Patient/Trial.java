@@ -67,22 +67,24 @@ public class Trial extends Activity implements OnClickListener {
 	}
 
 	public void onPause() {
+		super.onPause();
 		try {
 			socket.close();
 			output.append("Connection terminated.");
 		} catch (IOException e) {
 			output.append("Error closing socket.\nAssuming already closed.");
-		}
+		} catch (NullPointerException e) {} //Never got to create a socket.
 		socket = null;
 	}
 
 	public void onDestroy() {
+		super.onDestroy();
 		try {
 			socket.close();
 			output.append("Connection terminated.");
 		} catch (IOException e) {
 			output.append("Error closing socket.\nAssuming already closed.");
-		}
+		} catch (NullPointerException e) {} //Never got to create a socket.
 		socket = null;
 	}
 
