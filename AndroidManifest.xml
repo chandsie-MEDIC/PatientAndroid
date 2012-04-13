@@ -8,6 +8,7 @@
 
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<uses-permission android:name="android.permission.INTERNET" />
 
 	<application
 		android:icon="@drawable/ic_launcher"
@@ -30,8 +31,11 @@
 		<activity
 			android:configChanges="orientation|keyboardHidden"
 			android:label="@string/select_device"
-			android:name=".Patient.DeviceListActivity"
+			android:name=".DeviceListActivity"
 			android:theme="@android:style/Theme.Dialog" />
+		<activity
+			android:label="@string/home_doctor"
+			android:name=".Doctor" />
 	</application>
 
 </manifest>
