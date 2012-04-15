@@ -101,14 +101,14 @@ public class Trial extends Activity implements OnClickListener {
 			break;
 		case DEVICE_SELECT:
 			if (resultCode == Activity.RESULT_OK) {
-				new connectBT().execute(new String[] { data.getExtras()
+				new ConnectBT().execute(new String[] { data.getExtras()
 						.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS) });
 			}
 			break;
 		}
 	}
 
-	private class connectBT extends AsyncTask<String, Void, Boolean> {
+	private class ConnectBT extends AsyncTask<String, Void, Boolean> {
 
 		protected Boolean doInBackground(String... mac) {
 			try {
