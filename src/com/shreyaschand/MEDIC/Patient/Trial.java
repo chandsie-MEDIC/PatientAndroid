@@ -1,4 +1,4 @@
-package com.shreyaschand.MEDIC;
+package com.shreyaschand.MEDIC.Patient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -67,22 +67,24 @@ public class Trial extends Activity implements OnClickListener {
 	}
 
 	public void onPause() {
+		super.onPause();
 		try {
 			socket.close();
 			output.append("Connection terminated.");
 		} catch (IOException e) {
 			output.append("Error closing socket.\nAssuming already closed.");
-		}
+		} catch (NullPointerException e) {} //Never got to create a socket.
 		socket = null;
 	}
 
 	public void onDestroy() {
+		super.onDestroy();
 		try {
 			socket.close();
 			output.append("Connection terminated.");
 		} catch (IOException e) {
 			output.append("Error closing socket.\nAssuming already closed.");
-		}
+		} catch (NullPointerException e) {} //Never got to create a socket.
 		socket = null;
 	}
 
@@ -99,14 +101,14 @@ public class Trial extends Activity implements OnClickListener {
 			break;
 		case DEVICE_SELECT:
 			if (resultCode == Activity.RESULT_OK) {
-				new connectBT().execute(new String[] { data.getExtras()
+				new ConnectBT().execute(new String[] { data.getExtras()
 						.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS) });
 			}
 			break;
 		}
 	}
 
-	private class connectBT extends AsyncTask<String, Void, Boolean> {
+	private class ConnectBT extends AsyncTask<String, Void, Boolean> {
 
 		protected Boolean doInBackground(String... mac) {
 			try {

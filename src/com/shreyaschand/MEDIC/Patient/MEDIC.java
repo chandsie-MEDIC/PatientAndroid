@@ -1,4 +1,4 @@
-package com.shreyaschand.MEDIC;
+package com.shreyaschand.MEDIC.Patient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,7 @@ public class MEDIC extends Activity implements OnClickListener {
 
 		findViewById(R.id.home_about_button).setOnClickListener(this);
 		findViewById(R.id.home_trial_button).setOnClickListener(this);
+		findViewById(R.id.home_doctor_button).setOnClickListener(this);
 	}
 
 	public void onClick(View v) {
@@ -23,6 +24,9 @@ public class MEDIC extends Activity implements OnClickListener {
 			break;
 		case R.id.home_trial_button:
 			startActivity(new Intent(this, Trial.class));
+			break;
+		case R.id.home_doctor_button:
+			startActivity(new Intent(this, Doctor.class));
 			break;
 		}
 
