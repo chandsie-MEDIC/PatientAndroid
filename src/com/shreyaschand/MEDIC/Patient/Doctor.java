@@ -159,6 +159,7 @@ public class Doctor extends Activity implements OnClickListener {
 				while (message != null) {
 					publishProgress(new String[] { message });
 					docSocket.writer.println(message);
+					docSocket.writer.flush();
 					message = in.readLine();
 				}
 			} catch (IOException e) {
