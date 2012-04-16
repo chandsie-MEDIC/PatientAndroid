@@ -24,6 +24,8 @@ public class Doctor extends Activity implements OnClickListener {
 	private BluetoothAdapter btAdapter;
 	public BluetoothSocket btSocket;
 	private DoctorSocket docSocket;
+	private String btDeviceMac;
+	private boolean firstTimer = true;
 	
 	private TextView output = null;
 	private ScrollView scroller = null;
@@ -68,16 +70,40 @@ public class Doctor extends Activity implements OnClickListener {
 
 	}
 
-	public void onPause() {
-		super.onPause();
-		try {
-			btSocket.close();
-			output.append("Connection terminated.");
-		} catch (IOException e) {
-			output.append("Error closing socket.\nAssuming already closed.");
-		} catch (NullPointerException e) {} //Never got to create a socket.
-		btSocket = null;
+	public void onResume() {
+		super.onResume();
+		if(!firstTimer)
+		{
+			if (!btAdapter.isEnabled()) {
+
+				Intent enableIntent = new Intent(
+						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+			}
+			if(btSocket == null) {
+				new ConnectBT().execute(new String[] { btDeviceMac });
+				return;
+			}
+			try {
+				btSocket.getInputStream();
+				btSocket.getOutputStream();
+			} catch (IOException e) {
+				new ConnectBT().execute(new String[] { btDeviceMac });
+				return;
+			}
+		}
 	}
+	
+//	public void onPause() {
+//		super.onPause();
+//		try {
+//			btSocket.close();
+//			output.append("Connection terminated.");
+//		} catch (IOException e) {
+//			output.append("Error closing socket.\nAssuming already closed.");
+//		} catch (NullPointerException e) {} //Never got to create a socket.
+//		btSocket = null;
+//	}
 
 	public void onDestroy() {
 		super.onDestroy();
@@ -103,13 +129,13 @@ public class Doctor extends Activity implements OnClickListener {
 			break;
 		case DEVICE_SELECT:
 			if (resultCode == Activity.RESULT_OK) {
-				new ConnectBT().execute(new String[] { data.getExtras()
-						.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS) });
+				btDeviceMac = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+				new ConnectBT().execute(new String[] { btDeviceMac });
 			}
 			break;
 		case DOCTOR_SELECT:
 			if (resultCode == Activity.RESULT_OK) {
-				docSocket = (DoctorSocket) data.getExtras().get(DoctorListActivity.EXTRA_DOCTOR_SOCKET);
+				docSocket = DoctorListActivity.docSocket;//(DoctorSocket) data.getExtras().get(DoctorListActivity.EXTRA_DOCTOR_SOCKET);
 				new Communicator().execute();
 			}
 			break;
@@ -120,6 +146,7 @@ public class Doctor extends Activity implements OnClickListener {
 	private class ConnectBT extends AsyncTask<String, Void, Boolean> {
 
 		protected Boolean doInBackground(String... mac) {
+			firstTimer = false;
 			try {
 				publishProgress();
 				BluetoothDevice device = btAdapter.getRemoteDevice(mac[0]);
@@ -153,8 +180,7 @@ public class Doctor extends Activity implements OnClickListener {
 			AsyncTask<Void, String, Void> {
 		protected Void doInBackground(Void... params) {
 			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						btSocket.getInputStream()));
+				BufferedReader in = new BufferedReader(new InputStreamReader(btSocket.getInputStream()));
 				String message = in.readLine();
 				while (message != null) {
 					publishProgress(new String[] { message });

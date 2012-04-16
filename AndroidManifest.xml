@@ -34,6 +34,11 @@
 			android:name=".DeviceListActivity"
 			android:theme="@android:style/Theme.Dialog" />
 		<activity
+			android:configChanges="orientation|keyboardHidden"
+			android:label="@string/select_device"
+			android:name=".DoctorListActivity"
+			android:theme="@android:style/Theme.Dialog" />
+		<activity
 			android:label="@string/home_doctor"
 			android:name=".Doctor" />
 	</application>

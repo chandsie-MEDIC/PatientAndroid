@@ -28,7 +28,7 @@ import android.widget.TextView;
 public class DoctorListActivity extends Activity implements OnItemClickListener {
 
 	public static String EXTRA_DOCTOR_SOCKET = "doctor_socket";
-	private DoctorSocket docSocket;
+	public static DoctorSocket docSocket;
 	private HashMap<String, String> docs;
 	private ArrayAdapter<String> doctorsArrayAdapter;
 
@@ -50,6 +50,8 @@ public class DoctorListActivity extends Activity implements OnItemClickListener 
 		doctorsArrayAdapter = new ArrayAdapter<String>(this,
 				R.layout.doctor_name);
 
+		docs = new HashMap<String, String>();
+		
 		ListView doctorListView = (ListView) findViewById(R.id.available_doctors);
 		doctorListView.setAdapter(doctorsArrayAdapter);
 		doctorListView.setOnItemClickListener(this);
@@ -62,7 +64,7 @@ public class DoctorListActivity extends Activity implements OnItemClickListener 
 		new SocketManager().execute();
 	}
 
-	private class SocketManager extends AsyncTask<Void, Void, Void> {
+	private class SocketManager extends AsyncTask<Void, String[], Void> {
 		protected Void doInBackground(Void... params) {
 			if (docSocket == null) {
 				try {
@@ -75,21 +77,27 @@ public class DoctorListActivity extends Activity implements OnItemClickListener 
 				} catch (IOException e) {e.printStackTrace();}
 			}
 			docSocket.writer.println("$list");
-			doctorsArrayAdapter.clear();
 			try {
 				String[] doctors = docSocket.reader.readLine().split("\\$");
-				for(String doc: doctors){
-					if(!doc.equals("")){
-						String text = queryServer(doc);
-						docs.put(text, doc);
-						doctorsArrayAdapter.add(text);
-					}
-				}
+				publishProgress(doctors);
 			} catch (Exception e) {e.printStackTrace();}
+
+			return null;
+		}
+		
+		protected void onProgressUpdate(String[]... doctors) {
+			docs.clear();
+			doctorsArrayAdapter.clear();
+			for(String doc: doctors[0]){
+				if(!doc.equals("")){
+					String text = queryServer(doc);
+					docs.put(text, doc);
+					doctorsArrayAdapter.add(text);
+				}
+			}
 			if(doctorsArrayAdapter.isEmpty()){
 				doctorsArrayAdapter.add(getResources().getText(R.string.none_available).toString());
 			}
-			return null;
 		}
 		
 		protected void onPostExecute(Void result){
@@ -101,7 +109,7 @@ public class DoctorListActivity extends Activity implements OnItemClickListener 
 			try {
 				String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode("shreyas", "UTF-8") + "&" 
 							+ URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode("Brasilia", "UTF-8");
-				URLConnection conn = new URL("http://chands.dyndns-server.com:4080/user/" + uname).openConnection();
+				URLConnection conn = new URL("http://chands.dyndns-server.com:4080/user/" + uname + "/").openConnection();
 				conn.setDoOutput(true);
 				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 				wr.write(data);
@@ -119,9 +127,9 @@ public class DoctorListActivity extends Activity implements OnItemClickListener 
 
 	public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
 		String info = ((TextView) v).getText().toString();
-		
+		docSocket.writer.println(docs.get(info));
 		Intent intent = new Intent();
-		intent.putExtra(EXTRA_DOCTOR_SOCKET, docs.get(info));
+//		intent.putExtra(EXTRA_DOCTOR_SOCKET, docSocket);
 
 		setResult(Activity.RESULT_OK, intent);
 		finish();
