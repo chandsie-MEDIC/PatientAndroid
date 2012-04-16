@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Multipurpose Electronic Doctor Interface Capsule</string>
-    <string name="app_name">MEDIC</string>
-	<string name="space"> </string>
-    
-    <string name="home_doctor">Doctor</string>
+	<string name="hello">Multipurpose Electronic Doctor Interface Capsule</string>
+	<string name="app_name">MEDIC</string>
+	<string name="space"></string>
+	<string name="home_doctor">Doctor</string>
 	<string name="home_trial">Trial</string>
 	<string name="home_about">About</string>
-	
 	<string name="about_info">App designed by Shreyas Chand and Bri Mussman. 2012.</string>
 	<string name="about_ack">Many thanks to Mr. Paterno.</string>
 	<string name="about_version">Version 2.0</string>
-	
 	<string name="back">Back</string>
-	
-    <string name="connect">Connect to Device</string>
-	
-	<!--  DeviceListActivity -->
-    <string name="scanning">scanning for devices...</string>
-    <string name="select_device">select a device to connect</string>
-    <string name="none_paired">No devices have been paired</string>
-    <string name="none_found">No devices found</string>
-    <string name="title_paired_devices">Paired Devices</string>
-    <string name="title_other_devices">Other Available Devices</string>
-    <string name="button_scan">Scan for devices</string>
-	
+	<string name="connect">Connect to Device</string>
+
+	<!-- DeviceListActivity -->
+	<string name="scanning">scanning for devices...</string>
+	<string name="select_device">select a device to connect</string>
+	<string name="none_paired">No devices have been paired</string>
+	<string name="none_found">No devices found</string>
+	<string name="title_paired_devices">Paired Devices</string>
+	<string name="title_other_devices">Other Available Devices</string>
+	<string name="button_scan">Scan for devices</string>
+	<string name="button_refresh">Refresh doctor list</string>
+	<string name="title_available_doctors">Available doctors</string>
+	<string name="none_available">No doctors currently available</string>
+	<string name="find_doctor">Find Doctor</string>
+	<string name="fetching">Fetching...</string>
+
 </resources>
