@@ -181,13 +181,18 @@ public class Doctor extends Activity implements OnClickListener {
 		protected Void doInBackground(Void... params) {
 			try {
 				BufferedReader in = new BufferedReader(new InputStreamReader(btSocket.getInputStream()));
-				String message = in.readLine();
-				while (message != null) {
-					publishProgress(new String[] { message });
-					docSocket.writer.println(message);
-					docSocket.writer.flush();
-					message = in.readLine();
+				long startTime = System.currentTimeMillis();
+				long time = System.currentTimeMillis();
+				StringBuilder message = new StringBuilder(20000); 
+				String input = in.readLine();
+				while (input != null && (time - startTime) < 5000) {
+					time = System.currentTimeMillis();
+					publishProgress(new String[] { time - startTime + ": " + input + "\n"});
+					message.append(time - startTime + ":" + input + "$");
+					input = in.readLine();
 				}
+				docSocket.writer.println(message);
+				docSocket.writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
